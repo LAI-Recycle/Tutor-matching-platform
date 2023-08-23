@@ -3,6 +3,7 @@ const router = express.Router()
 const admin = require('./modules/admin') 
 const tutorController = require('../controllers/tutor-controller') 
 const userController = require('../controllers/user-controller')
+const { generalErrorHandler } = require('../middleware/error-handler')
 const passport = require('../config/passport') 
 
 router.use('/admin', admin)
@@ -13,5 +14,6 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/tutors', tutorController.getTutors) 
 
 router.use('/', (req, res) => res.redirect('/tutors'))
+router.use('/', generalErrorHandler)
 
 module.exports = router
