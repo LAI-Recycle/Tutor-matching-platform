@@ -1,0 +1,23 @@
+<form action="/admin/tutors" method="POST">
+  <div class="mb-4 text-center">
+    <h1 class="h3 font-weight-normal mb-3">Create Tutor</h1>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="name">Name</label>
+    <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="tel">Tel</label>
+    <input class="form-control" type="text" name="tel" id="tel" placeholder="Enter tel" required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="courseDescription">Course Description</label>
+    <textarea class="form-control" id="courseDescription" name="courseDescription" rows="3" required></textarea>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="teachingStyle">Teaching Style</label>
+    <textarea class="form-control" id="teachingStyle" name="teachingStyle" rows="3"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
