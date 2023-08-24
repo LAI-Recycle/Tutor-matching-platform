@@ -22,10 +22,20 @@ const adminController = {
       teachingStyle
     })
       .then(() => {
-        req.flash('success_messages', 'tutor was successfully created') // 在畫面顯示成功提示
+        req.flash('success_messages', 'Tutor was successfully created') // 在畫面顯示成功提示
         res.redirect('/admin/tutors') //新增完成後導回後台首頁
       })
       .catch(err => next(err))
-  }
+  },
+  getTutor: (req, res, next) => {
+    Tutor.findByPk(req.params.id, { //去資料庫用 id 找一筆資料
+      raw: true // 找到以後整理格式再回傳
+    })
+      .then(tutor => {
+        if (!tutor) throw new Error("Tutor didn't exist!") //  如果找不到，回傳錯誤訊息，後面不執行
+        res.render('admin/tutor', { tutor })  
+      })
+      .catch(err => next(err))
+    }
 }
 module.exports = adminController
