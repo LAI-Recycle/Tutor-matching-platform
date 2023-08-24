@@ -1,0 +1,18 @@
+<div class="form-row mb-3">
+  <label class="form-label" for="name">Name</label>
+  <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{tutor.name}}" required>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="tel">Tel</label>
+  <input class="form-control" type="text" name="tel" id="tel" placeholder="Enter tel" value="{{tutor.tel}}" required>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="courseDescription">Course Description</label>
+  <textarea class="form-control" id="courseDescription" name="courseDescription" rows="3" required>{{tutor.courseDescription}}</textarea>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="teachingStyle">Teaching Style</label>
+  <textarea class="form-control" id="teachingStyle" name="teachingStyle" rows="3" required>{{tutor.teachingStyle}}</textarea>
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>

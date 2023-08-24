@@ -36,6 +36,35 @@ const adminController = {
         res.render('admin/tutor', { tutor })  
       })
       .catch(err => next(err))
-    }
+    },
+  editTutor: (req, res, next) => { // 新增這段
+   Tutor.findByPk(req.params.id, {
+    raw: true
+  })
+    .then(tutor => {
+      if (!tutor) throw new Error("Tutor didn't exist!")
+      res.render('admin/edit-tutor', { tutor })
+    })
+    .catch(err => next(err))
+  },
+  putTutor: (req, res, next) => {
+    const { name, tel, courseDescription, teachingStyle } = req.body
+    if (!name) throw new Error('Tutor name is required!')
+    Tutor.findByPk(req.params.id)
+      .then(tutor => {
+        if (!tutor) throw new Error("Tutor didn't exist!")
+        return tutor.update({
+          name,
+          tel,
+          courseDescription,
+          teachingStyle
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', 'Tutor was successfully to update')
+        res.redirect('/admin/tutors')
+      })
+      .catch(err => next(err))
+  }
 }
 module.exports = adminController
