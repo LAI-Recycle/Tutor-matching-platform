@@ -65,6 +65,15 @@ const adminController = {
         res.redirect('/admin/tutors')
       })
       .catch(err => next(err))
+  },
+  deleteTutor: (req, res, next) => { // 新增以下
+    return Tutor.findByPk(req.params.id)
+      .then(tutor => {
+        if (!tutor) throw new Error("Tutor didn't exist!")
+        return tutor.destroy()
+      })
+      .then(() => res.redirect('/admin/tutors'))
+      .catch(err => next(err))
   }
 }
 module.exports = adminController
