@@ -1,6 +1,13 @@
-'use strict';
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  const Tutor = sequelize.define('Tutor', {
+  class Tutor extends Model {
+
+    static associate (models) {
+      Tutor.belongsTo(models.Category, { foreignKey: 'categoryId' })
+    }
+  };
+  Tutor.init({
     name: DataTypes.STRING,
     tel: DataTypes.STRING,
     courseDescription: DataTypes.TEXT,
@@ -10,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Tutor',
     tableName: 'Tutors',
     underscored: true,
-  });
-  Tutor.associate = function(models) {
-    // associations can be defined here
-  };
-  return Tutor;
-};
+  })
+  return Tutor
+}
