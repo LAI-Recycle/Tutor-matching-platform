@@ -1,10 +1,12 @@
-const { Tutor } = require('../models')
+const { Tutor, User, Category } = require('../models')
 const { localFileHandler } = require('../helpers/file-helpers')
 
 const adminController = {
-  getTutors: (req, res) => {
+  getTutors: (req, res, next) => {
     Tutor.findAll({
-      raw: true
+      raw: true,
+      nest: true,
+      include: [Category] 
     })
     .then(tutors => res.render('admin/tutors', { tutors }))
     .catch(err => next(err))
@@ -34,7 +36,9 @@ const adminController = {
   },
   getTutor: (req, res, next) => {
     Tutor.findByPk(req.params.id, { //去資料庫用 id 找一筆資料
-      raw: true // 找到以後整理格式再回傳
+      raw: true, // 找到以後整理格式再回傳
+      nest: true,
+      include: [Category] 
     })
       .then(tutor => {
         if (!tutor) throw new Error("Tutor didn't exist!") //  如果找不到，回傳錯誤訊息，後面不執行
