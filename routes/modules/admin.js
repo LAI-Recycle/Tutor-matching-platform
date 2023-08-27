@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const adminController = require('../../controllers/admin-controller')
+const categoryController = require('../../controllers/category-controller')
 const upload = require('../../middleware/multer') 
 
 router.patch('/users/:id', adminController.patchUser)
@@ -12,5 +13,6 @@ router.put('/tutors/:id', upload.single('image'), adminController.putTutor)
 router.delete('/tutors/:id', adminController.deleteTutor)
 router.get('/tutors', adminController.getTutors)
 router.post('/tutors', upload.single('image'), adminController.postTutor)
+router.get('/categories', categoryController.getCategories)
 router.use('/', (req, res) => res.redirect('/admin/tutors'))
 module.exports = router
