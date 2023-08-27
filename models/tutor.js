@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     tel: DataTypes.STRING,
     courseDescription: DataTypes.TEXT,
-    teachingStyle: DataTypes.TEXT
+    teachingStyle: DataTypes.TEXT,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Tutor',
-    tableName: 'Tutors',
+    // tableName: 'Tutors',
     underscored: true,
   })
   return Tutor

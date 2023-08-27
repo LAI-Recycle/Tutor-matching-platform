@@ -1,4 +1,5 @@
 const { Tutor } = require('../models')
+const { localFileHandler } = require('../helpers/file-helpers')
 
 const adminController = {
   getTutors: (req, res) => {
@@ -15,12 +16,16 @@ const adminController = {
     
     const { name, tel, courseDescription, teachingStyle } = req.body  // 從 req.body 拿出表單裡的資料
     if (!name) throw new Error('Tutor name is required!') 
-    Tutor.create({ //產生一個新的 Restaurant 物件實例，並存入資料庫
-      name,
-      tel,
-      courseDescription,
-      teachingStyle
-    })
+    const { file } = req
+    localFileHandler(file)
+      .then(filePath => Tutor.create({ // 再 create 這筆餐廳資料
+          name,
+          tel,
+          courseDescription,
+          teachingStyle,
+          categoryId: 1,
+          image: filePath || null
+        }))
       .then(() => {
         req.flash('success_messages', 'Tutor was successfully created') // 在畫面顯示成功提示
         res.redirect('/admin/tutors') //新增完成後導回後台首頁
@@ -50,14 +55,19 @@ const adminController = {
   putTutor: (req, res, next) => {
     const { name, tel, courseDescription, teachingStyle } = req.body
     if (!name) throw new Error('Tutor name is required!')
-    Tutor.findByPk(req.params.id)
-      .then(tutor => {
+    const { file } = req 
+  Promise.all([ // 非同步處理
+      Tutor.findByPk(req.params.id), // 去資料庫查有沒有這間餐廳
+      localFileHandler(file) // 把檔案傳到 file-helper 處理 
+    ])
+      .then(([tutor, filePath]) => {
         if (!tutor) throw new Error("Tutor didn't exist!")
         return tutor.update({
           name,
           tel,
           courseDescription,
-          teachingStyle
+          teachingStyle,
+          image: filePath || tutor.image
         })
       })
       .then(() => {
