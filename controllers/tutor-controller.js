@@ -15,6 +15,20 @@ const tutorController = {
         tutors: data
       })
     })
+  },
+  getTutor: (req, res, next) => {
+    return Tutor.findByPk(req.params.id, {
+      include: Category, // 拿出關聯的 Category model
+      nest: true,
+      raw: true
+    })
+      .then(tutor => {
+        if (!tutor) throw new Error("Tutor didn't exist!")
+        res.render('tutor', {
+          tutor
+        })
+      })
+      .catch(err => next(err))
   }
 }
 

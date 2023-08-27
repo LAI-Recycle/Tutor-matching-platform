@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>{{tutor.name}}</h1>
+    <p>{{tutor.Category.name}}</p>
+  </div>
+  <div class="col-md-4">
+    <img class="img-responsive center-block" src="{{tutor.image}}"
+      style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
+    <br>
+    <div class="well">
+      <ul class="list-unstyled">
+        <li><strong>Tel:</strong> {{tutor.tel}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <strong>課程介紹:</strong>
+    <p style="white-space: break-spaces;">{{tutor.courseDescription}}</p>
+    <hr>
+    <strong>教學模式:</strong>
+    <p style="white-space: break-spaces;">{{tutor.teachingStyle}}</p>
+  </div>
+  <hr>
+</div>
+<a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>

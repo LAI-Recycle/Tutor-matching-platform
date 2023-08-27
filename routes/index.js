@@ -13,6 +13,7 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // Passport 做身分驗證
 router.get('/logout', userController.logout)
+router.get('/tutors/:id', authenticated, tutorController.getTutor)
 router.get('/tutors', authenticated, tutorController.getTutors) 
 
 router.use('/', (req, res) => res.redirect('/tutors'))
