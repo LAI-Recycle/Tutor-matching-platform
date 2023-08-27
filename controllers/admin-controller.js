@@ -16,7 +16,7 @@ const adminController = {
   },
   postTutor: (req, res, next) => {
     
-    const { name, tel, courseDescription, teachingStyle } = req.body  // 從 req.body 拿出表單裡的資料
+    const { name, tel, courseDescription, teachingStyle, categoryId } = req.body  // 從 req.body 拿出表單裡的資料
     if (!name) throw new Error('Tutor name is required!') 
     const { file } = req
     localFileHandler(file)
@@ -25,7 +25,7 @@ const adminController = {
           tel,
           courseDescription,
           teachingStyle,
-          categoryId: 1,
+          categoryId,
           image: filePath || null
         }))
       .then(() => {
@@ -46,18 +46,19 @@ const adminController = {
       })
       .catch(err => next(err))
     },
-  editTutor: (req, res, next) => { // 新增這段
-   Tutor.findByPk(req.params.id, {
-    raw: true
-  })
-    .then(tutor => {
+  editTutor: (req, res, next) => { 
+    return Promise.all([
+      Tutor.findByPk(req.params.id, { raw: true }),
+      Category.findAll({ raw: true })
+    ])
+    .then(([tutor, categories]) => {
       if (!tutor) throw new Error("Tutor didn't exist!")
-      res.render('admin/edit-tutor', { tutor })
+      res.render('admin/edit-tutor', { tutor, categories  })
     })
     .catch(err => next(err))
   },
   putTutor: (req, res, next) => {
-    const { name, tel, courseDescription, teachingStyle } = req.body
+    const { name, tel, courseDescription, teachingStyle, categoryId } = req.body
     if (!name) throw new Error('Tutor name is required!')
     const { file } = req 
   Promise.all([ // 非同步處理
@@ -71,6 +72,7 @@ const adminController = {
           tel,
           courseDescription,
           teachingStyle,
+          categoryId,
           image: filePath || tutor.image
         })
       })
@@ -87,6 +89,13 @@ const adminController = {
         return tutor.destroy()
       })
       .then(() => res.redirect('/admin/tutors'))
+      .catch(err => next(err))
+  },
+  createTutor: (req, res, next) => { 
+    return Category.findAll({
+      raw: true
+    })
+      .then(categories => res.render('admin/create-tutor', { categories }))
       .catch(err => next(err))
   }
 }
