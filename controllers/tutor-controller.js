@@ -18,16 +18,13 @@ const tutorController = {
   },
   getTutor: (req, res, next) => {
     return Tutor.findByPk(req.params.id, {
-      include: Category, // 拿出關聯的 Category model
-      nest: true,
-      raw: true
+      include: [Category]
     })
       .then(tutor => {
         if (!tutor) throw new Error("Tutor didn't exist!")
-        res.render('tutor', {
-          tutor
-        })
+        return tutor.increment('viewCounts', { by: 1 })
       })
+      .then(tutor => res.render('tutor', {tutor: tutor.toJSON() }))
       .catch(err => next(err))
   }
 }
