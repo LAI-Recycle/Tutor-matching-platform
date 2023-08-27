@@ -10,7 +10,7 @@ module.exports = {
       Array.from({ length: 50 }, () => ({
         name: faker.name.findName(),
         tel: faker.phone.phoneNumber(),
-        image: `https://loremflickr.com/320/240/man,girl/all`,
+        image: `https://loremflickr.com/320/240/man,girl/?random=${Math.random() * 100}`,
         course_description: faker.lorem.text(),
         teaching_style: faker.lorem.text(),
         created_at: new Date(),
