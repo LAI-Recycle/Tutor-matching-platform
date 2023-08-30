@@ -1,18 +1,29 @@
 const { Tutor, Category } = require('../models')
 
 const tutorController = {
-  getTutors: (req, res) => {
-    return Tutor.findAll({
+  getTutors: (req, res, next) => {
+    const categoryId = Number(req.query.categoryId) || ''
+
+    return Promise.all([
+      Tutor.findAll({
       include: Category,
+      where: {  // 新增查詢條件
+          ...categoryId ? { categoryId } : {} // 檢查 categoryId 是否為空值
+        },
       nest: true,
       raw: true
-    }).then(tutors => {
+      }),
+      Category.findAll({ raw: true })
+    ])
+    .then(([tutors,categories ]) => {
       const data = tutors.map(r => ({
         ...r,
         courseDescription: r.courseDescription.substring(0, 50)
       }))
       return res.render('tutors', {
-        tutors: data
+        tutors: data,
+        categories,
+        categoryId
       })
     })
   },
