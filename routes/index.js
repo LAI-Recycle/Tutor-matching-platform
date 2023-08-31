@@ -16,6 +16,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 router.get('/tutors/:id', authenticated, tutorController.getTutor)
 router.get('/tutors', authenticated, tutorController.getTutors) 
+router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 router.post('/comments', authenticated, commentController.postComment)
 
 router.use('/', (req, res) => res.redirect('/tutors'))
