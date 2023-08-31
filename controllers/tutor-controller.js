@@ -1,4 +1,4 @@
-const { Tutor, Category } = require('../models')
+const { Tutor, Category, Comment, User } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const tutorController = {
@@ -37,7 +37,10 @@ const tutorController = {
   },
   getTutor: (req, res, next) => {
     return Tutor.findByPk(req.params.id, {
-      include: [Category]
+      include: [ 
+        Category,
+        { model: Comment, include: User }
+      ]
     })
       .then(tutor => {
         if (!tutor) throw new Error("Tutor didn't exist!")
