@@ -1,29 +1,37 @@
 const { Tutor, Category } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const tutorController = {
   getTutors: (req, res, next) => {
+    const DEFAULT_LIMIT = 12
     const categoryId = Number(req.query.categoryId) || ''
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT
+    const offset = getOffset(limit, page)
 
     return Promise.all([
-      Tutor.findAll({
+      Tutor.findAndCountAll({
       include: Category,
       where: {  // 新增查詢條件
           ...categoryId ? { categoryId } : {} // 檢查 categoryId 是否為空值
         },
-      nest: true,
-      raw: true
+        limit ,
+        offset,
+        nest: true,
+        raw: true
       }),
       Category.findAll({ raw: true })
     ])
     .then(([tutors,categories ]) => {
-      const data = tutors.map(r => ({
+      const data = tutors.rows.map(r => ({
         ...r,
         courseDescription: r.courseDescription.substring(0, 50)
       }))
       return res.render('tutors', {
         tutors: data,
         categories,
-        categoryId
+        categoryId,
+        pagination: getPagination(limit, page, tutors.count)
       })
     })
   },
