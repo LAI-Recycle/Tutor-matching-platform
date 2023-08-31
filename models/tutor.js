@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate (models) {
       Tutor.belongsTo(models.Category, { foreignKey: 'categoryId' })
+      Tutor.hasMany(models.Comment, { foreignKey: 'tutorId' })
     }
   };
   Tutor.init({

@@ -23,6 +23,27 @@ module.exports = {
       name: 'user2',
       created_at: new Date(),
       updated_at: new Date()
+    }, {
+      email: 'user3@example.com',
+      password: await bcrypt.hash('12345678', 10),
+      is_admin: false,
+      name: 'user3',
+      created_at: new Date(),
+      updated_at: new Date()
+    }, {
+      email: 'user4@example.com',
+      password: await bcrypt.hash('12345678', 10),
+      is_admin: false,
+      name: 'user4',
+      created_at: new Date(),
+      updated_at: new Date()
+    }, {
+      email: 'user5@example.com',
+      password: await bcrypt.hash('12345678', 10),
+      is_admin: false,
+      name: 'user5',
+      created_at: new Date(),
+      updated_at: new Date()
     }], {})
   },
   down: async (queryInterface, Sequelize) => { // 清空資料表中所有資料
