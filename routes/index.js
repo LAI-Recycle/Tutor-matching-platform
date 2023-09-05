@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const admin = require('./modules/admin') 
+const auth = require('./modules/auth')
 const tutorController = require('../controllers/tutor-controller') 
 const userController = require('../controllers/user-controller')
 const commentController = require('../controllers/comment-controller')
@@ -23,6 +24,7 @@ router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
 
+router.use('/auth', auth)
 router.use('/', (req, res) => res.redirect('/tutors'))
 router.use('/', generalErrorHandler)
 
