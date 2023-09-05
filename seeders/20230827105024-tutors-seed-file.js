@@ -10,9 +10,11 @@ module.exports = {
       Array.from({ length: 50 }, () => ({
         name: faker.name.findName(),
         tel: faker.phone.phoneNumber(),
-        image: `https://loremflickr.com/320/240/man,girl/?random=${Math.random() * 100}`,
-        course_description: faker.lorem.text(),
+        introduction: faker.lorem.text(),
         teaching_style: faker.lorem.text(),
+        tutor_time: 30,
+        video_Link: "http",
+        image: `https://loremflickr.com/320/240/man,girl/?random=${Math.random() * 100}`,
         created_at: new Date(),
         updated_at: new Date(),
         category_id: categories[Math.floor(Math.random() * categories.length)].id

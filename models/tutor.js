@@ -11,8 +11,10 @@ module.exports = (sequelize, DataTypes) => {
   Tutor.init({
     name: DataTypes.STRING,
     tel: DataTypes.STRING,
-    courseDescription: DataTypes.TEXT,
+    introduction: DataTypes.TEXT,
     teachingStyle: DataTypes.TEXT,
+    tutor_time: DataTypes.STRING,
+    video_link: DataTypes.STRING,
     image: DataTypes.STRING,
     viewCounts: DataTypes.INTEGER
   }, {

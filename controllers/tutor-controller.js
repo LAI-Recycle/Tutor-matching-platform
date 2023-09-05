@@ -3,7 +3,7 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const tutorController = {
   getTutors: (req, res, next) => {
-    const DEFAULT_LIMIT = 12
+    const DEFAULT_LIMIT = 9
     const categoryId = Number(req.query.categoryId) || ''
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || DEFAULT_LIMIT
@@ -25,7 +25,7 @@ const tutorController = {
     .then(([tutors,categories ]) => {
       const data = tutors.rows.map(r => ({
         ...r,
-        courseDescription: r.courseDescription.substring(0, 50)
+        introduction: r.introduction.substring(0, 50)
       }))
       return res.render('tutors', {
         tutors: data,

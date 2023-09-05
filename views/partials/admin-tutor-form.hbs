@@ -17,13 +17,23 @@
   <input class="form-control" type="text" name="tel" id="tel" placeholder="Enter tel" value="{{tutor.tel}}" required>
 </div>
 <div class="form-row mb-3">
-  <label class="form-label" for="courseDescription">Course Description</label>
-  <textarea class="form-control" id="courseDescription" name="courseDescription" rows="3" required>{{tutor.courseDescription}}</textarea>
+  <label class="form-label" for="introduction">introduction</label>
+  <textarea class="form-control" id="introduction" name="introduction" rows="3"
+    required>{{tutor.introduction}}</textarea>
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="teachingStyle">Teaching Style</label>
   <textarea class="form-control" id="teachingStyle" name="teachingStyle" rows="3" required>{{tutor.teachingStyle}}</textarea>
 </div>
+<div class="form-row mb-3">
+  <label class="form-label" for="tutorTime">課程時間</label>
+  <textarea class="form-control" id="tutorTime" name="tutorTime" rows="3" required>{{tutor.tutorTime}}</textarea>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="videoLink">課程視訊連結</label>
+  <input class="form-control" type="text" name="videoLink" id="videoLink" placeholder="Enter videoLink" value="{{tutor.videoLink}}" required>
+</div>
+
 <div class="form-row mb-3">
   <label class="form-label" for="image">Image</label>
   <input class="form-control" type="file" class="form-control-file" id="image" name="image">

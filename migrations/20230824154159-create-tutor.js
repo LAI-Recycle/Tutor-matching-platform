@@ -14,11 +14,17 @@ module.exports = {
       tel: {
         type: Sequelize.STRING
       },
-      course_description: {
+      introduction: {
         type: Sequelize.TEXT
+      },
+      tutor_time: {
+        type: Sequelize.STRING
       },
       teaching_style: {
         type: Sequelize.TEXT
+      },
+      video_link: {
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
