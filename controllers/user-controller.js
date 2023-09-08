@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs') 
 const { User , Tutor , Course } = require('../models/')
-const { imgurFileHandler } = require('../helpers/file-helpers')
+const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -55,16 +55,18 @@ const userController = {
       .catch(err => next(err))
   },
   putUser: (req, res, next) => {
-    const { name } = req.body
+    const { name, nation, aboutMe } = req.body
     const { file } = req
     return Promise.all([
       User.findByPk(req.params.id),
-      imgurFileHandler(file)
+      localFileHandler(file)
     ])
       .then(([user, filePath]) => {
         if (!user) throw new Error("User doesn't exist!")
         return user.update({
           name: name || user.name,
+          nation: nation,
+          aboutMe: aboutMe,
           image: filePath || user.image
         })
       })
