@@ -13,8 +13,9 @@ module.exports = {
         introduction: faker.lorem.text(),
         teaching_style: faker.lorem.text(),
         tutor_time: 30,
-        video_Link: "http",
+        video_link: "http",
         image: `https://loremflickr.com/320/240/man,girl/?random=${Math.random() * 100}`,
+        booking: '[ "Tuesday", "Wednesday" ]',
         created_at: new Date(),
         updated_at: new Date(),
         category_id: categories[Math.floor(Math.random() * categories.length)].id

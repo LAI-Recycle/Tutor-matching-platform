@@ -1,12 +1,12 @@
 <div class="row">
-  <div class="col-md-12">
-    <h1>{{tutor.name}}</h1>
-    <p>{{tutor.Category.name}}</p>
-  </div>
   <div class="col-md-4">
     <img class="img-responsive center-block" src="{{tutor.image}}"
       style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
     <br>
+  </div>
+  <div class="col-md-4">
+    <h1>{{tutor.name}}</h1>
+    <p>{{tutor.Category.name}}</p>
     <div class="well">
       <class="list-unstyled">
         <li><strong>Tel:</strong> {{tutor.tel}}</li>
@@ -14,15 +14,17 @@
         <li><strong>評論數:</strong> -</li>
         </ul>
     </div>
-    <br>
   </div>
-  <div class="col-md-8">
-    <strong>介紹:</strong>
+  
+  <br>
+  <hr>
+  <div class="col-md-12">
+    <strong>introduction</strong>
     <p style="white-space: break-spaces;">{{tutor.introduction}}</p>
-    <hr>
-    <strong>教學模式:</strong>
+
+    <strong>teaching style</strong>
     <p style="white-space: break-spaces;">{{tutor.teachingStyle}}</p>
   </div>
-  <hr>
 </div>
-<a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+<br>
+<hr>

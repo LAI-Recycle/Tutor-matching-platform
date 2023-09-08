@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs') 
-const db = require('../models')
-const { User } = require('../models/')
+const { User , Tutor , Course } = require('../models/')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
@@ -74,7 +73,35 @@ const userController = {
         res.redirect(`/users/${req.params.id}`)
       })
       .catch(err => next(err))
+  },
+  addCourse: (req, res, next) => {
+    const { tutorId } = req.params
+    const { booking } = req.body
+    return Promise.all([
+      Tutor.findByPk(tutorId),
+      Course.findOne({
+        where: {
+          userId: req.user.id,
+          tutorId
+        }
+      })
+    ])
+      .then(([tutor, course]) => {
+        if (!tutor) throw new Error("tutor didn't exist!")
+        if (course) throw new Error('You have booking this tutor!')
+        return Course.create({
+          userId: req.user.id,
+          tutorId,
+          booking
+        })
+      })
+      .then(() => {
+        res.render(`tutor-booking`)
+      })
+      .catch(err => next(err))
   }
+
   
 }
 module.exports = userController
+

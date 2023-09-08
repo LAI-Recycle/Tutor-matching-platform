@@ -27,15 +27,50 @@
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="tutorTime">課程時間</label>
-  <textarea class="form-control" id="tutorTime" name="tutorTime" rows="3" required>{{tutor.tutorTime}}</textarea>
+  <input class="form-control" type="text" name="tutorTime" id="tutorTime" placeholder="Enter tutorTime" value="{{tutor.tutorTime}}" required>
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="videoLink">課程視訊連結</label>
   <input class="form-control" type="text" name="videoLink" id="videoLink" placeholder="Enter videoLink" value="{{tutor.videoLink}}" required>
 </div>
 
+
+<div class="form-row mb-4">
+  <label class="form-label mb-3" for="book">開放預約時間</label>
+  <div style="display: flex; justify-content: space-between;">
+    <div>
+      <input type="checkbox" id="Monday" name="booking[]" value="Monday"/>
+      <label for="Monday">Monday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Tuesday"  name="booking[]" value="Tuesday"/>
+      <label for="Tuesday">Tuesday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Wednesday" name="booking[]" value="Wednesday"/>
+      <label for="Wednesday">Wednesday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Thursday" name="booking[]" value="Thursday"/>
+      <label for="Thursday">Thursday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Friday" name="booking[]" value="Friday"/>
+      <label for="Friday">Friday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Saturday" name="booking[]" value="Saturday"/>
+      <label for="Saturday">Saturday</label>
+    </div>
+    <div>
+      <input type="checkbox" id="Sunday" name="booking[]" value="Sunday"/>
+      <label for="Sunday">Sunday</label>
+    </div>
+  </div>
+</div>
+
 <div class="form-row mb-3">
-  <label class="form-label" for="image">Image</label>
+  <label class="form-label" for="image">課程照片</label>
   <input class="form-control" type="file" class="form-control-file" id="image" name="image">
 </div>
 <button type="submit" class="btn btn-primary">Submit</button>

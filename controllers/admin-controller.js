@@ -8,24 +8,33 @@ const adminController = {
       nest: true,
       include: [Category] 
     })
-    .then(tutors => res.render('admin/tutors', { tutors }))
+    .then(tutors => 
+      res.render('admin/tutors', { tutors }))
     .catch(err => next(err))
   },
-  createTutor: (req, res) => {    
-    return res.render('admin/create-tutor')  
+  createTutor: (req, res, next) => { 
+    return Category.findAll({
+      raw: true
+    })
+      .then(categories => res.render('admin/create-tutor', { categories }))
+      .catch(err => next(err))
   },
   postTutor: (req, res, next) => {
-    
-    const { name, tel, courseDescription, teachingStyle, categoryId } = req.body  // 從 req.body 拿出表單裡的資料
+    const selectedDays = req.body.booking;
+    const { name, tel, introduction, teachingStyle, tutorTime, videoLink, categoryId } = req.body  // 從 req.body 拿出表單裡的資料
     if (!name) throw new Error('Tutor name is required!') 
+    booking = JSON.stringify(selectedDays)
     const { file } = req
     localFileHandler(file)
       .then(filePath => Tutor.create({ // 再 create 這筆餐廳資料
           name,
           tel,
-          courseDescription,
+          introduction,
           teachingStyle,
+          tutorTime,
+          videoLink,
           categoryId,
+          booking,
           image: filePath || null
         }))
       .then(() => {
@@ -53,12 +62,13 @@ const adminController = {
     ])
     .then(([tutor, categories]) => {
       if (!tutor) throw new Error("Tutor didn't exist!")
-      res.render('admin/edit-tutor', { tutor, categories  })
+      res.render('admin/edit-tutor', { tutor, categories })
     })
     .catch(err => next(err))
   },
   putTutor: (req, res, next) => {
-    const { name, tel, courseDescription, teachingStyle, categoryId } = req.body
+    const selectedDays = req.body.booking;
+    const { name, tel, introduction, teachingStyle, tutorTime, videoLink, categoryId } = req.body
     if (!name) throw new Error('Tutor name is required!')
     const { file } = req 
   Promise.all([ // 非同步處理
@@ -67,12 +77,16 @@ const adminController = {
     ])
       .then(([tutor, filePath]) => {
         if (!tutor) throw new Error("Tutor didn't exist!")
+        booking = JSON.stringify(selectedDays)
         return tutor.update({
           name,
           tel,
-          courseDescription,
+          introduction,
           teachingStyle,
+          tutorTime,
+          videoLink,
           categoryId,
+          booking,
           image: filePath || tutor.image
         })
       })
@@ -89,13 +103,6 @@ const adminController = {
         return tutor.destroy()
       })
       .then(() => res.redirect('/admin/tutors'))
-      .catch(err => next(err))
-  },
-  createTutor: (req, res, next) => { 
-    return Category.findAll({
-      raw: true
-    })
-      .then(categories => res.render('admin/create-tutor', { categories }))
       .catch(err => next(err))
   },
   getUsers: (req, res, next) => {

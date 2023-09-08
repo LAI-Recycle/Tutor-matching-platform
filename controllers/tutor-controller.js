@@ -46,8 +46,14 @@ const tutorController = {
         if (!tutor) throw new Error("Tutor didn't exist!")
         return tutor.increment('viewCounts', { by: 1 })
       })
-      .then(tutor => res.render('tutor', {tutor: tutor.toJSON() }))
-      .catch(err => next(err))
+      .then(tutor => {
+        const booking = JSON.parse(tutor.booking)
+        console.log("========")
+        console.log(booking)
+        console.log(tutor.toJSON())
+        res.render('tutor', {tutor: tutor.toJSON() , booking })
+      })
+    .catch(err => next(err))
   }
 }
 

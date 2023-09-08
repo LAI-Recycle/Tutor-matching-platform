@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate (models) {
       Tutor.belongsTo(models.Category, { foreignKey: 'categoryId' })
       Tutor.hasMany(models.Comment, { foreignKey: 'tutorId' })
+      Tutor.belongsToMany(models.User, {
+        through: models.Course, // 透過 Course 表來建立關聯
+        foreignKey: 'tutorId', // 對 Course 表設定 FK
+        as: 'CourseUsers' // 幫這個關聯取個名稱
+      })
     }
   };
   Tutor.init({
@@ -13,9 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     tel: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     teachingStyle: DataTypes.TEXT,
-    tutor_time: DataTypes.STRING,
-    video_link: DataTypes.STRING,
+    tutorTime: DataTypes.STRING,
+    videoLink: DataTypes.STRING,
     image: DataTypes.STRING,
+    booking:DataTypes.STRING,
     viewCounts: DataTypes.INTEGER
   }, {
     sequelize,
