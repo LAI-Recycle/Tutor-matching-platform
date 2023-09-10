@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tutorId', // 對 Course 表設定 FK
         as: 'CourseUsers' // 幫這個關聯取個名稱
       })
+      Tutor.belongsTo(models.User, { foreignKey: 'userId' })
     }
   };
   Tutor.init({
@@ -22,10 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     videoLink: DataTypes.STRING,
     image: DataTypes.STRING,
     booking:DataTypes.STRING,
-    viewCounts: DataTypes.INTEGER
+    viewCounts: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Tutor',
+    tableName: 'Tutors',
     underscored: true,
   })
   return Tutor

@@ -7,13 +7,18 @@
           <li class="nav-item">
             <a href="/users/{{ user.id }}" class="nav-link">{{ user.name }}'s Profile</a>
           </li>
-          {{#if user}} 
-          {{!-- 設定是 老師的時候就看不到 --}}
+          {{#if user.isTutor}} 
           <li class="nav-item">
-            <a href="/admin/tutors/create" class="nav-link">成為老師</a>
+            <a href="/users/tutors/{{ user.id }}" class="nav-link" >{{ user.name }}'s Tutor Profile</a>
+          </li>
+          {{else}}
+          <li class="nav-item">
+            <a href="/users/create" class="nav-link">成為老師</a>
           </li>
           {{/if}}
         </ul>
+          
+        
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

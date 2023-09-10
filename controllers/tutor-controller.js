@@ -48,9 +48,6 @@ const tutorController = {
       })
       .then(tutor => {
         const booking = JSON.parse(tutor.booking)
-        console.log("========")
-        console.log(booking)
-        console.log(tutor.toJSON())
         res.render('tutor', {tutor: tutor.toJSON() , booking })
       })
     .catch(err => next(err))

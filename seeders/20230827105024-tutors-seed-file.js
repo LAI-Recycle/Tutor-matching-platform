@@ -6,8 +6,12 @@ module.exports = {
       'SELECT id FROM Categories;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
+    const users = await queryInterface.sequelize.query(
+      'SELECT id FROM Users;',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    )
     await queryInterface.bulkInsert('Tutors',
-      Array.from({ length: 50 }, () => ({
+      Array.from({ length: 10 }, ( _ , index) => ({
         name: faker.name.findName(),
         tel: faker.phone.phoneNumber(),
         introduction: faker.lorem.text(),
@@ -18,7 +22,8 @@ module.exports = {
         booking: '[ "Tuesday", "Wednesday" ]',
         created_at: new Date(),
         updated_at: new Date(),
-        category_id: categories[Math.floor(Math.random() * categories.length)].id
+        category_id: categories[Math.floor(Math.random() * categories.length)].id,
+        user_id: users[ index + 1 ].id,
       }))
     )
   },

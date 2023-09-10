@@ -12,37 +12,6 @@ const adminController = {
       res.render('admin/tutors', { tutors }))
     .catch(err => next(err))
   },
-  createTutor: (req, res, next) => { 
-    return Category.findAll({
-      raw: true
-    })
-      .then(categories => res.render('admin/create-tutor', { categories }))
-      .catch(err => next(err))
-  },
-  postTutor: (req, res, next) => {
-    const selectedDays = req.body.booking;
-    const { name, tel, introduction, teachingStyle, tutorTime, videoLink, categoryId } = req.body  // 從 req.body 拿出表單裡的資料
-    if (!name) throw new Error('Tutor name is required!') 
-    booking = JSON.stringify(selectedDays)
-    const { file } = req
-    localFileHandler(file)
-      .then(filePath => Tutor.create({ // 再 create 這筆餐廳資料
-          name,
-          tel,
-          introduction,
-          teachingStyle,
-          tutorTime,
-          videoLink,
-          categoryId,
-          booking,
-          image: filePath || null
-        }))
-      .then(() => {
-        req.flash('success_messages', 'Tutor was successfully created') // 在畫面顯示成功提示
-        res.redirect('/admin/tutors') //新增完成後導回後台首頁
-      })
-      .catch(err => next(err))
-  },
   getTutor: (req, res, next) => {
     Tutor.findByPk(req.params.id, { //去資料庫用 id 找一筆資料
       raw: true, // 找到以後整理格式再回傳

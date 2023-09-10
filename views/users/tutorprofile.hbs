@@ -1,0 +1,40 @@
+<div class="row mb-5">
+  <div class="col-md-4">
+    <img class="img-responsive center-block mb-5" src="{{tutor.image}}"
+      style="width: 250px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
+    <div class="card-body">
+      <h1><strong>本名：</strong>{{user.name}}</h1>
+      <h1><strong>老師名：</strong>{{tutor.name}}</h1>
+      <strong>Nation</strong>
+      <p style="white-space: break-spaces;">{{user.nation}}</p>
+      <strong>About Me</strong>
+      <p style="white-space: break-spaces;">{{user.aboutMe}}</p>
+      <a class="btn btn-primary" href="/users/tutors/{{tutor.id}}/edit">edit</a>
+      <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+
+    </div>
+  </div>
+  <div class="col-md-8">
+    <strong>your introduction</strong>
+    <p style="white-space: break-spaces;">{{tutor.introduction}}</p>
+
+    <strong>your teaching style</strong>
+    <p style="white-space: break-spaces;">{{tutor.teachingStyle}}</p>
+
+    {{!-- Comment --}}
+    <h3 class="mb-3">所有評論：</h3>
+    {{#each tutor.Comments}}
+    {{#if ../user.isAdmin}}
+    <form action="/comments/{{this.id}}?_method=DELETE" method="POST" class="float-end">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    {{/if}}
+    <blockquote class="blockquote mb-0">
+      <h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
+      <p>{{this.text}}</p>
+      <footer class="blockquote-footer">{{relativeTimeFromNow this.createdAt}}</footer>
+    </blockquote>
+    <hr />
+    {{/each}}
+  </div>
+</div>
