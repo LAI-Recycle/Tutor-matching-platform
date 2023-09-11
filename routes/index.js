@@ -16,6 +16,7 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // Passport 做身分驗證
 router.get('/logout', userController.logout)
+router.get('/search', authenticated, userController.getUserSearch)
 router.get('/tutors/:id', authenticated, tutorController.getTutor)
 router.get('/tutors', authenticated, tutorController.getTutors) 
 router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
@@ -29,6 +30,8 @@ router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
 router.post('/course/:tutorId', authenticated, userController.addCourse)
+
+
 
 
 router.use('/auth', auth)

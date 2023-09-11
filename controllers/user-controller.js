@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs') 
 const { User , Tutor , Course , Category} = require('../models/')
 const { localFileHandler } = require('../helpers/file-helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -181,8 +183,6 @@ const userController = {
     ])
       .then(([tutor, filePath]) => {
         if (!tutor) throw new Error("Tutor didn't exist!")
-        console.log("===================481859serid")
-        console.log(tutor.userId)
         booking = JSON.stringify(selectedDays)
         return tutor.update({
           name,
@@ -201,6 +201,49 @@ const userController = {
         res.redirect(`/users/tutors/${tutor.userId}`)
       })
       .catch(err => next(err))
-  }
+  },
+  getUserSearch: (req, res, next) => {
+    const DEFAULT_LIMIT = 9
+    const categoryId = Number(req.query.categoryId) || ''
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT
+    const offset = getOffset(limit, page)
+
+    const keyword = req.query.keyword
+
+    return Promise.all([
+      Tutor.findAndCountAll({
+      include: Category,
+      where: {  // 新增查詢條件
+          ...categoryId ? { categoryId } : {}, // 檢查 categoryId 是否為空值
+          
+        },
+        limit ,
+        offset,
+        nest: true,
+        raw: true
+      }),
+      Category.findAll({ raw: true })
+    ])
+    .then(([tutors,categories ]) => {
+      const data = tutors.rows
+      .filter(tutor => 
+        tutor.name.toLowerCase().includes(keyword.toLowerCase())
+        )
+      .map(tutor => ({
+        ...tutor,
+        introduction: tutor.introduction.substring(0, 50)
+
+      }))
+      return res.render('tutors', {
+        tutors: data,
+        categories,
+        categoryId,
+        pagination: getPagination(limit, page, tutors.count),
+        keyword: keyword
+      })
+    })
+    .catch(err => next(err))
+  },
 }
 module.exports = userController

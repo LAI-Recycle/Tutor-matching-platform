@@ -34,6 +34,7 @@ const tutorController = {
         pagination: getPagination(limit, page, tutors.count)
       })
     })
+    .catch(err => next(err))
   },
   getTutor: (req, res, next) => {
     return Tutor.findByPk(req.params.id, {

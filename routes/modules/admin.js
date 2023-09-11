@@ -11,7 +11,6 @@ router.get('/tutors/:id', adminController.getTutor)
 router.put('/tutors/:id', upload.single('image'), adminController.putTutor)
 router.delete('/tutors/:id', adminController.deleteTutor)
 router.get('/tutors', adminController.getTutors)
-
 router.get('/categories/:id', categoryController.getCategories) 
 router.put('/categories/:id', categoryController.putCategory)
 router.delete('/categories/:id', categoryController.deleteCategory)

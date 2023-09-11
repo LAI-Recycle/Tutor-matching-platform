@@ -1,3 +1,17 @@
+<div class="row" id="search-bar">
+  <div class="col-12">
+    <form action="/search">
+      <div class="input-group mb-3">
+        <input type="text" name="keyword" class="form-control" placeholder="Enter tutor name to search..." value="{{keyword}}"
+          aria-label="Tutor Name..." aria-describedby="search-button">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <ul class="nav nav-pills">
   <li class="nav-item">
     <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="?categoryId=">全部</a>
