@@ -34,17 +34,16 @@
   <br>
   <hr>
   <div class="col-md-12">
-    <strong>introduction</strong>
+    <h3>introduction</h3>
     <p style="white-space: break-spaces;">{{tutor.introduction}}</p>
     
-    <strong>teaching style</strong>
+    <h3>teaching style</h3>
     <p style="white-space: break-spaces;">{{tutor.teachingStyle}}</p>
   </div>
 </div>
-<br>
-<hr>
+
 {{!-- Comment --}}
-<h3 class="mb-3">所有評論：</h3>
+<h3 class="mb-3">Lesson History</h3>
 {{#each tutor.Comments}}
 {{#if ../user.isAdmin}}
 <form action="/comments/{{this.id}}?_method=DELETE" method="POST" class="float-end">
@@ -58,6 +57,7 @@
 </blockquote>
 <hr />
 {{/each}}
+
 <form action="/comments" method="POST">
   <div class="form-row mb-3">
     <label class="form-label" for="text">留下評論：</label>
@@ -67,3 +67,6 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
 </form>
+
+<br>
+<hr>
